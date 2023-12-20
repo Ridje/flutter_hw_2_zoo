@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hw_2_zoo/detail.dart';
 import 'package:flutter_hw_2_zoo/mocked_data.dart';
 
 void main() {
@@ -73,6 +74,15 @@ class GridCard extends StatelessWidget {
     return Card(
         clipBehavior: Clip.hardEdge,
         child: InkWrapperForImagedContainer(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailsPage(
+                          animal: animal,
+                        )),
+              );
+            },
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(animal.imageUrl),
@@ -88,14 +98,27 @@ class GridCard extends StatelessWidget {
 }
 
 class InkWrapperForImagedContainer extends StatelessWidget {
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
   final Widget child;
-  const InkWrapperForImagedContainer({super.key, required this.decoration, required this.child});
+  final void Function() onTap;
+  const InkWrapperForImagedContainer(
+      {super.key,
+      required this.decoration,
+      required this.child,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () => {}, child: Ink(decoration: decoration, child: child));
+        onTap: () async {
+          await _delayNavigatiom();
+          onTap();
+        },
+        child: Ink(decoration: decoration, child: child));
+  }
+
+  Future<void> _delayNavigatiom() async {
+    await Future.delayed(const Duration(milliseconds: 200));
   }
 }
 
