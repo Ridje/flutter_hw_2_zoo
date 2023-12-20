@@ -71,29 +71,31 @@ class GridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        clipBehavior: Clip.hardEdge,
-        child: InkWrapperForImagedContainer(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DetailsPage(
-                          animal: animal,
-                        )),
-              );
-            },
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(animal.imageUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
-                alignment: AlignmentDirectional.bottomStart,
-                width: 300,
-                height: 300,
-                child: GridCardTitle(title: animal.name))));
+    return Hero(
+        tag: 'TEST${animal.id}',
+        child: Card(
+            clipBehavior: Clip.hardEdge,
+            child: InkWrapperForImagedContainer(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailsPage(
+                              animal: animal,
+                            )),
+                  );
+                },
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(animal.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                    alignment: AlignmentDirectional.bottomStart,
+                    width: 300,
+                    height: 300,
+                    child: GridCardTitle(title: animal.name)))));
   }
 }
 
@@ -110,15 +112,10 @@ class InkWrapperForImagedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () async {
-          await _delayNavigatiom();
+        onTap: () {
           onTap();
         },
         child: Ink(decoration: decoration, child: child));
-  }
-
-  Future<void> _delayNavigatiom() async {
-    await Future.delayed(const Duration(milliseconds: 200));
   }
 }
 

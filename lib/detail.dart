@@ -21,6 +21,7 @@ class _DetailsPageState extends State<DetailsPage> {
     player.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,45 +32,49 @@ class _DetailsPageState extends State<DetailsPage> {
         ),
         body: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Card(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      widget.animal.imageUrl,
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    Padding(
-                        padding: const EdgeInsetsDirectional.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Name: ${widget.animal.name}',
-                              style: Theme.of(context).textTheme.headlineMedium,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Description: ${widget.animal.description}',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 8),
-                            OutlinedButton(
-                                onPressed: () {
-                                  playSound(widget.animal.soundPath);
-                                },
-                                child: Text('Sound: ${widget.animal.sound}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium)),
-                          ],
-                        )),
-                  ]),
-            )));
+            child: Hero(
+                tag: 'TEST${widget.animal.id}',
+                child: Card(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          widget.animal.imageUrl,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                        Padding(
+                            padding: const EdgeInsetsDirectional.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Name: ${widget.animal.name}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Description: ${widget.animal.description}',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                const SizedBox(height: 8),
+                                OutlinedButton(
+                                    onPressed: () {
+                                      playSound(widget.animal.soundPath);
+                                    },
+                                    child: Text('Sound: ${widget.animal.sound}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium)),
+                              ],
+                            )),
+                      ]),
+                ))));
   }
 
   Future<void> playSound(String localPath) async {
