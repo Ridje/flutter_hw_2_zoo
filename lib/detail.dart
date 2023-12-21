@@ -1,6 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_2_zoo/mocked_data.dart';
+import 'package:flutter_hw_2_zoo/progress_button.dart';
 
 class DetailsPage extends StatefulWidget {
   final Animal animal;
@@ -14,13 +14,6 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  final AudioPlayer player = AudioPlayer();
-
-  @override
-  void dispose() {
-    player.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +25,8 @@ class _DetailsPageState extends State<DetailsPage> {
         ),
         body: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Hero(
-                tag: 'TEST${widget.animal.id}',
+            // child: Hero(
+            //     tag: 'TEST${widget.animal.id}',
                 child: Card(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -63,21 +56,16 @@ class _DetailsPageState extends State<DetailsPage> {
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 const SizedBox(height: 8),
-                                OutlinedButton(
-                                    onPressed: () {
-                                      playSound(widget.animal.soundPath);
-                                    },
-                                    child: Text('Sound: ${widget.animal.sound}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium)),
+                                ProgressButton(
+                                  onPressed: () => {},
+                                  buttonText: widget.animal.sound,
+                                  soundPath: widget.animal.soundPath
+                                ),
                               ],
                             )),
                       ]),
-                ))));
-  }
-
-  Future<void> playSound(String localPath) async {
-    await player.play(AssetSource(localPath));
+                ))
+                // )
+                );
   }
 }
